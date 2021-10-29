@@ -83,7 +83,6 @@ function ISRemoveSpearFromGrave:new(character, grave, spear, time)
 	end
 	o.spear = spear
 	o.spearItem = InventoryItemFactory.CreateItem(spear.itemType)
-	o.spearItem:setBroken(spear.broken)
 	o.spearItem:setCondition(spear.condition)
 	o.spearItem:setHaveBeenRepaired(spear.repair)
 	o.stopOnWalk = true;

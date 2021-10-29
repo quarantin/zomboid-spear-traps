@@ -68,7 +68,7 @@ function GraveTrapMenu.OnFillWorldObjectContextMenu2(player, context, worldobjec
 					context:addSubMenu(rootmenu, submenu)
 					for _,spear in pairs(spears) do
 						local name = spear.name
-						if spear.condition <= 0 or spear.broken then
+						if spear.condition <= 0 then
 							name = name .. ' (Broken)'
 						end
 						submenu:addOption(name, worldobjects, GraveTrapMenu.onRemoveSpearFromGrave, grave, spear, playerObj)

@@ -93,7 +93,7 @@ end
 
 function findNonBrokenSpear(grave)
 	for _,spear in pairs(grave:getModData()['spears']) do
-		if spear.condition > 0 and not spear.broken then
+		if spear.condition > 0 then
 			return _
 		end
 	end
@@ -106,7 +106,7 @@ function breakSpear(grave)
 	local spearIndex = findNonBrokenSpear(grave)
 	if spearIndex > 0 then
 		local data = grave:getModData()
-		data['spears'][spearIndex].broken = true
+		data['spears'][spearIndex].condition = 0
 		grave:transmitModData()
 	end
 end

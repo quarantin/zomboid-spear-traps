@@ -44,13 +44,11 @@ function ISAddSpearToGrave:perform()
 	if spearsCount < ISEmptyGraves.getMaxCorpses(self.grave) then
 		local itemName = self.spear:getName()
 		local itemType = self.spear:getFullType()
-		local itemBroken = self.spear:isBroken()
 		local itemCondition = self.spear:getCondition()
 		local itemRepair = self.spear:getHaveBeenRepaired()
 		table.insert(spears, {
 			name = itemName,
 			itemType = itemType,
-			broken = itemBroken,
 			condition = itemCondition,
 			repair = itemRepair,
 		})
