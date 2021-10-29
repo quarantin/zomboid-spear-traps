@@ -27,7 +27,10 @@ end
 
 function ISRemoveSpearFromGrave:perform()
 	ISBaseTimedAction.perform(self)
-	removeSpear(self.grave)
+	removeSpearTile(self.grave)
+	local spears = self.grave:getModData()['spears'] or {}
+	local spearIndex = findNonBrokenSpear(spears)
+	table.remove(spears, spearIndex)
 	self.character:getInventory():AddItem(self.spear)
 end
 
