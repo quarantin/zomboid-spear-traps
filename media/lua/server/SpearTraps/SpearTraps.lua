@@ -172,27 +172,46 @@ function removeSpear(grave)
 	return false
 end
 
+function giveRandomInjury(player)
+
+	local bodyParts = {
+		BodyPartType.Foot_L,
+		BodyPartType.Foot_R,
+		BodyPartType.LowerLeg_L,
+		BodyPartType.LowerLeg_R,
+	}
+
+	local bodyPart = player:getBodyDamage():getBodyPart(bodyParts[1 + ZombRand(4)])
+	bodyPart:AddDamage(20 + ZombRand(80))
+	bodyPart:setAdditionalPain(bodyPart:getAdditionalPain() + ZombRand(20))
+end
+
 function playerUpdate(player)
+
 	local pData = player:getModData()
 	local square = player:getSquare()
 	local grave = getGrave(square)
 	if grave ~= nil and not isFilledGrave(grave) then
 		local data = grave:getModData()
 		local spears = data['spears'] or {}
-		if not pData['onGrave'] and #spears > 0 and findNonBrokenSpear(spears) > 0 then
-			player:setHealth(0)
-			removeSpear(grave)
+		if #spears > 0 and findNonBrokenSpear(spears) > 0 and not pData['onGrave'] then
+			if SandboxVars.SpearTraps.SpearTrapsKillPlayer then
+				player:setHealth(0)
+				removeSpear(grave)
+			else
+				for i=0, #spears do
+					giveRandomInjury(player)
+				end
+			end
 		elseif not pData['onGrave'] then
 			pData['onGrave'] = true
-			-- Make the character to fall or to get injured
+			if player:isRunning() then
+				giveRandomInjury(player)
+			end
 		end
 	else
 		pData['onGrave'] = nil
 	end
-end
-
-if SandboxVars.SpearTraps.SpearTrapsKillPlayer then
-	Events.OnPlayerUpdate.Add(playerUpdate)
 end
 
 function zombieUpdate(zombie)
@@ -218,4 +237,5 @@ function zombieUpdate(zombie)
 	end
 end
 
+Events.OnPlayerUpdate.Add(playerUpdate)
 Events.OnZombieUpdate.Add(zombieUpdate)
