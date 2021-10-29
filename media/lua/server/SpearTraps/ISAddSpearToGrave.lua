@@ -33,15 +33,11 @@ function ISAddSpearToGrave:perform()
 	local data = self.grave:getModData()
 	local data2 = self.grave2:getModData()
 
-	data['spears']  = data['spears'] or {}
+	data['spears'] = data['spears'] or {}
 	data2['spears'] = data['spears']
 
-	data['spearsCount'] = data['spearsCount'] or 0
-	data2['spearsCount'] = data['spearsCount']
-
 	local spears = data['spears']
-	local spearsCount = data['spearsCount']
-	if spearsCount < ISEmptyGraves.getMaxCorpses(self.grave) then
+	if #spears < ISEmptyGraves.getMaxCorpses(self.grave) then
 		local itemName = self.spear:getName()
 		local itemType = self.spear:getFullType()
 		local itemCondition = self.spear:getCondition()
@@ -57,15 +53,13 @@ function ISAddSpearToGrave:perform()
 		self.character:setPrimaryHandItem(nil)
 		self.character:getInventory():Remove(self.spear)
 
-		local grave = data['spearsCount'] % 2 == 1 and self.grave or self.grave2
+		local grave = #spears % 2 == 1 and self.grave or self.grave2
 		local sq = grave:getSquare()
 		local name = getSpearSprite(grave)
 		local tile = IsoObject.new(sq, name, nil, false)
 		tile:setName(name)
 		tile:setSprite(name)
 		sq:AddTileObject(tile)
-		data['spearsCount']  = data['spearsCount'] + 1
-		data2['spearsCount'] = data['spearsCount']
 	end
 end
 

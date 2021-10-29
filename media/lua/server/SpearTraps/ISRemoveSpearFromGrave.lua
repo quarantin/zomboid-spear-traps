@@ -34,8 +34,6 @@ function removeSpear(character, grave, data, data2, spears, spearIndex, spearIte
 		table.remove(spears, spearIndex)
 		square:RemoveTileObject(tile)
 		character:getInventory():AddItem(spearItem)
-		data['spearsCount'] = data['spearsCount'] - 1
-		data2['spearsCount'] = data['spearsCount']
 		return true
 	end
 	return false
@@ -49,12 +47,8 @@ function ISRemoveSpearFromGrave:perform()
 	data['spears'] = data['spears'] or {}
 	data2['spears'] = data['spears']
 
-	data['spearsCount'] = data['spearsCount'] or 0
-	data2['spearsCount'] = data['spearsCount']
-
 	local spears = data['spears']
-	local spearsCount = data['spearsCount']
-	if spearsCount > 0 then
+	if #spears > 0 then
 		local spearIndex = indexOf(spears, self.spear)
 		if spearIndex > 0 then
 			if not removeSpear(self.character, self.grave, data, data2, spears, spearIndex, self.spearItem) then

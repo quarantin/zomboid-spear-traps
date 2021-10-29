@@ -34,7 +34,7 @@ end
 function isFirstSquare(grave)
 
 	local sprite = getGraveSprite(grave)
-	return sprite ~= 'location_community_cemetary_01_33' and sprite ~= 'location_community_cemetary_01_34'
+	return sprite == 'location_community_cemetary_01_33' or sprite == 'location_community_cemetary_01_34'
 end
 
 function getTile(square)
@@ -78,15 +78,16 @@ function getSpearSprite(grave)
 	local graveSprite = getGraveSprite(grave)
 	local spearSprites = spearSprites[graveSprite]
 	local data = grave:getModData()
-	if data['spearsCount'] == 0 then
+	local spears = data['spears'] or {}
+	if #spears == 1 then
 		return spearSprites[1]
-	elseif data['spearsCount'] == 1 then
+	elseif #spears == 2 then
 		return spearSprites[1]
-	elseif data['spearsCount'] == 2 then
+	elseif #spears == 3 then
 		return spearSprites[2]
-	elseif data['spearsCount'] == 3 then
+	elseif #spears == 4 then
 		return spearSprites[2]
-	elseif data['spearsCount'] == 4 then
+	elseif #spears == 5 then
 		return spearSprites[3]
 	end
 end
@@ -151,8 +152,8 @@ function zombieUpdate(zombie)
 	local grave = getGrave(square)
 	if grave ~= nil and not isFilledGrave(grave) then
 		local data = grave:getModData()
-		local spearsCount = data['spearsCount'] or 0
-		if spearsCount > 0 and findNonBrokenSpear(grave) > 0 then
+		local spears = data['spears'] or {}
+		if #spears > 0 and findNonBrokenSpear(grave) > 0 then
 			breakSpear(grave)
 			zombie:DoZombieInventory()
 			zombie:Kill(getPlayer())
