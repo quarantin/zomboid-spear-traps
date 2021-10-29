@@ -1,6 +1,6 @@
 require 'BuildingObjects/ISEmptyGraves'
 
-spearSprites = {
+local spearSprites = {
 
 	location_community_cemetary_01_32 = {
 		'spear_traps_01_0',
@@ -22,45 +22,10 @@ spearSprites = {
 	},
 }
 
-function indexOf(table, value)
-	for _,v in pairs(table) do
-		if v == value then
-			return _
-		end
-	end
-	return 0
-end
-
 function isFirstSquare(grave)
 
 	local sprite = getGraveSprite(grave)
 	return sprite == 'location_community_cemetary_01_33' or sprite == 'location_community_cemetary_01_34'
-end
-
-function getTile(square)
-	local objs = square:getObjects()
-	for i=0, objs:size() - 1 do
-		local obj = objs:get(i)
-		if obj ~= nil then
-			local spriteName = obj:getTile()
-			if spriteName ~= nil and string.find(spriteName, 'spear_traps_01') then
-				return obj
-			end
-
-			spriteName = obj:getSpriteName()
-			if spriteName ~= nil and string.find(spriteName, 'spear_traps_01') then
-				return obj
-			end
-
-			local sprite = obj:getSprite()
-			if sprite ~= nil then
-				spriteName = sprite:getName()
-				if spriteName ~= nil and string.find(spriteName, 'spear_traps_01') then
-					return obj
-				end
-			end
-		end
-	end
 end
 
 function getGraveSprite(grave)
@@ -92,19 +57,51 @@ function getSpearSprite(grave)
 	end
 end
 
-function findNonBrokenSpear(grave)
-	for _,spear in pairs(grave:getModData()['spears']) do
+function getTile(square)
+	local objs = square:getObjects()
+	for i=0, objs:size() - 1 do
+		local obj = objs:get(i)
+		if obj ~= nil then
+			local spriteName = obj:getTile()
+			if spriteName ~= nil and string.find(spriteName, 'spear_traps_01') then
+				return obj
+			end
+
+			spriteName = obj:getSpriteName()
+			if spriteName ~= nil and string.find(spriteName, 'spear_traps_01') then
+				return obj
+			end
+
+			local sprite = obj:getSprite()
+			if sprite ~= nil then
+				spriteName = sprite:getName()
+				if spriteName ~= nil and string.find(spriteName, 'spear_traps_01') then
+					return obj
+				end
+			end
+		end
+	end
+end
+
+function findNonBrokenSpear(spears)
+	--for _,spear in pairs(grave:getModData()['spears']) do
+	--	if spear.condition > 0 then
+	--		return _
+	--	end
+	--end
+	for i = #spears, 1, -1 do
+		print('TESTING spear ' .. tostring(i))
+		local spear = spears[i]
 		if spear.condition > 0 then
-			return _
+			print('FOUND NON BROKEN SPEAR AT ' .. tostring(i))
+			return i
 		end
 	end
 	return -1
 end
 
-function breakSpear(grave)
-
-	-- TODO: Remove one spear tile from the grave
-	local spearIndex = findNonBrokenSpear(grave)
+function breakSpear(spears)
+	local spearIndex = findNonBrokenSpear(spears)
 	if spearIndex > 0 then
 		local data = grave:getModData()
 		data['spears'][spearIndex].condition = 0
@@ -136,6 +133,7 @@ function getOtherSquare(grave)
 	return sq2
 end
 
+-- TODO Retrieve the grave the way it was mentioned on Discord
 function getGrave(square)
 	for i=0, square:getSpecialObjects():size() - 1 do
 		local grave = square:getSpecialObjects():get(i)
@@ -143,6 +141,58 @@ function getGrave(square)
 			return grave
 		end
 	end
+end
+
+function removeSpear(grave)
+
+	local tile = nil
+	local square = nil
+	local spears = grave:getModData()['spears'] or {}
+	local spearIndex = findNonBrokenSpear(spears)
+	if spearIndex <= 0 then
+		return
+	end
+
+	square = grave:getSquare()
+	tile = getTile(square)
+	if tile ~= nil then
+		table.remove(spears, spearIndex)
+		square:RemoveTileObject(tile)
+		return true
+	end
+
+	square = getOtherSquare(grave)
+	tile = getTile(square)
+	if tile ~= nil then
+		table.remove(spears, spearIndex)
+		square:RemoveTileObject(tile)
+		return true
+	end
+
+	return false
+end
+
+function playerUpdate(player)
+	local pData = player:getModData()
+	local square = player:getSquare()
+	local grave = getGrave(square)
+	if grave ~= nil and not isFilledGrave(grave) then
+		local data = grave:getModData()
+		local spears = data['spears'] or {}
+		if not pData['onGrave'] and #spears > 0 and findNonBrokenSpear(spears) > 0 then
+			player:setHealth(0)
+			removeSpear(grave)
+		elseif not pData['onGrave'] then
+			pData['onGrave'] = true
+			-- Make the character to fall or to get injured
+		end
+	else
+		pData['onGrave'] = nil
+	end
+end
+
+if SandboxVars.SpearTraps.SpearTrapsKillPlayer then
+	Events.OnPlayerUpdate.Add(playerUpdate)
 end
 
 function zombieUpdate(zombie)
@@ -153,11 +203,12 @@ function zombieUpdate(zombie)
 	if grave ~= nil and not isFilledGrave(grave) then
 		local data = grave:getModData()
 		local spears = data['spears'] or {}
-		if #spears > 0 and findNonBrokenSpear(grave) > 0 then
-			breakSpear(grave)
+		if #spears > 0 and findNonBrokenSpear(spears) > 0 then
+			breakSpear(spears)
 			zombie:DoZombieInventory()
 			zombie:Kill(getPlayer())
 			zombie:setOnDeathDone(true)
+			removeSpear(grave)
 		elseif not zData['onGrave'] then
 			zData['onGrave'] = true
 			zombie:knockDown(true)
@@ -167,4 +218,4 @@ function zombieUpdate(zombie)
 	end
 end
 
-Events.OnZombieUpdate.Add(zombieUpdate);
+Events.OnZombieUpdate.Add(zombieUpdate)
