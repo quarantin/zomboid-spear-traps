@@ -135,10 +135,12 @@ end
 
 -- TODO Retrieve the grave the way it was mentioned on Discord
 function getGrave(square)
-	for i=0, square:getSpecialObjects():size() - 1 do
-		local grave = square:getSpecialObjects():get(i)
-		if grave:getName() == 'EmptyGraves' then
-			return grave
+	if square then
+		for i=0, square:getSpecialObjects():size() - 1 do
+			local grave = square:getSpecialObjects():get(i)
+			if grave:getName() == 'EmptyGraves' then
+				return grave
+			end
 		end
 	end
 end
