@@ -84,16 +84,9 @@ function getTile(square)
 end
 
 function findNonBrokenSpear(spears)
-	--for _,spear in pairs(grave:getModData()['spears']) do
-	--	if spear.condition > 0 then
-	--		return _
-	--	end
-	--end
 	for i = #spears, 1, -1 do
-		print('TESTING spear ' .. tostring(i))
 		local spear = spears[i]
 		if spear.condition > 0 then
-			print('FOUND NON BROKEN SPEAR AT ' .. tostring(i))
 			return i
 		end
 	end
