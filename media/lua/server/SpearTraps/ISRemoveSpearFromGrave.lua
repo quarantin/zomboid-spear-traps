@@ -27,7 +27,9 @@ end
 
 function ISRemoveSpearFromGrave:perform()
 	ISBaseTimedAction.perform(self)
-	removeSpearTile(self.grave)
+	if self.spear:getCondition() > 0 then
+		removeSpearTile(self.grave)
+	end
 	local spears = self.grave:getModData()['spears'] or {}
 	table.remove(spears, self.spearIndex)
 	self.character:getInventory():AddItem(self.spear)
