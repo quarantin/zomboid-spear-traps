@@ -64,12 +64,12 @@ function GraveTrapMenu.OnFillWorldObjectContextMenu2(player, context, worldobjec
 					local rootmenu = context:addOption(getText('ContextMenu_RemoveSpearFromGrave'), worldobjects, nil)
 					local submenu = context:getNew(context)
 					context:addSubMenu(rootmenu, submenu)
-					for _,spear in pairs(spears) do
+					for spearIndex, spear in pairs(spears) do
 						local name = spear.name
 						if spear.condition <= 0 then
 							name = name .. ' (Broken)'
 						end
-						submenu:addOption(name, worldobjects, GraveTrapMenu.onRemoveSpearFromGrave, grave, spear, playerObj)
+						submenu:addOption(name, worldobjects, GraveTrapMenu.onRemoveSpearFromGrave, grave, spear, spearIndex, playerObj)
 					end
 					return
 				end
@@ -87,19 +87,13 @@ function GraveTrapMenu.onAddSpearToGrave(worldobjects, grave, spear, player)
 	end
 end
 
-function GraveTrapMenu.onRemoveSpearFromGrave(worldobjects, grave, spear, player)
+function GraveTrapMenu.onRemoveSpearFromGrave(worldobjects, grave, spear, spearIndex, player)
 	if luautils.walkAdj(player, grave:getSquare(), false) then
 		local primary = true
 		local twoHands = false
-		ISTimedActionQueue.add(ISRemoveSpearFromGrave:new(player, grave, spear, 100))
+		ISTimedActionQueue.add(ISRemoveSpearFromGrave:new(player, grave, spear, spearIndex, 100))
 	end
 end
 
 Events.OnFillWorldObjectContextMenu.Add(GraveTrapMenu.OnFillWorldObjectContextMenu)
 Events.OnFillWorldObjectContextMenu.Add(GraveTrapMenu.OnFillWorldObjectContextMenu2)
-
-function loadSpearInGraves()
-	print('saveSpearInGraves')
-end
-
-Events.OnGameStart.Add(loadSpearInGrave)

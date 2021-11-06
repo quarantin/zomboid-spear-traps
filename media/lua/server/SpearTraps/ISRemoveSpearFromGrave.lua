@@ -29,12 +29,11 @@ function ISRemoveSpearFromGrave:perform()
 	ISBaseTimedAction.perform(self)
 	removeSpearTile(self.grave)
 	local spears = self.grave:getModData()['spears'] or {}
-	local spearIndex = findNonBrokenSpear(spears)
-	table.remove(spears, spearIndex)
+	table.remove(spears, self.spearIndex)
 	self.character:getInventory():AddItem(self.spear)
 end
 
-function ISRemoveSpearFromGrave:new(character, grave, spear, time)
+function ISRemoveSpearFromGrave:new(character, grave, spear, spearIndex, time)
 	local o = {}
 	setmetatable(o, self)
 	self.__index = self
@@ -48,6 +47,7 @@ function ISRemoveSpearFromGrave:new(character, grave, spear, time)
 	o.spear = InventoryItemFactory.CreateItem(spear.itemType)
 	o.spear:setCondition(spear.condition)
 	o.spear:setHaveBeenRepaired(spear.repair)
+	o.spearIndex = spearIndex
 	o.stopOnWalk = true;
 	o.stopOnRun = true;
 	o.maxTime = time
