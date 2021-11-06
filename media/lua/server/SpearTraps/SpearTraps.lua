@@ -59,7 +59,7 @@ end
 
 function getTile(square)
 	local objs = square:getObjects()
-	for i=0, objs:size() - 1 do
+	for i=objs:size() - 1, 0, -1 do
 		local obj = objs:get(i)
 		if obj ~= nil then
 			local spriteName = obj:getTile()
