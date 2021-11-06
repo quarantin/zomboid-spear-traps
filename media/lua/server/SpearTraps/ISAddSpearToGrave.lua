@@ -56,7 +56,7 @@ function ISAddSpearToGrave:perform()
 		local grave = #spears % 2 == 1 and self.grave or self.grave2
 		local sq = grave:getSquare()
 		local name = getSpearSprite(grave)
-		local tile = IsoObject.new(sq, name, nil, false)
+		local tile = IsoObject.new(sq, name, true)
 		tile:setName(name)
 		tile:setSprite(name)
 		sq:AddTileObject(tile)
