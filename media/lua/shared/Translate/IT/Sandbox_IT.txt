@@ -1,4 +1,4 @@
 Sandbox_IT = {
-	Sandbox_SpearTraps_SpearTrapsKillPlayer = "Spear Traps Kill Players"
-	Sandbox_SpearTraps_SpearTrapsKillPlayer_tooltip = "Kill players when walking over a spear trap"
+	Sandbox_SpearTraps_SpearTrapsKillPlayer = "Le trappole con lancia uccidono i giocatori"
+	Sandbox_SpearTraps_SpearTrapsKillPlayer_tooltip = "Uccidi i giocatori quando cammini sopra una trappola con lancia"
 }
