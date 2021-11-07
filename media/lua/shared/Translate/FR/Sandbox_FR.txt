@@ -1,0 +1,4 @@
+Sandbox_FR = {
+	Sandbox_SpearTraps_SpearTrapsKillPlayer = "Spear Traps Kill Player"
+	Sandbox_SpearTraps_SpearTrapsKillPlayer_tooltip = "Kills the player when walking over a spear trap"
+}
