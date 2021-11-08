@@ -1,4 +1,4 @@
 ContextMenu_RO = {
-	ContextMenu_AddSpearToGrave = "Add Spear to Grave"
-	ContextMenu_RemoveSpearFromGrave = "Remove Spear from Grave"
+	ContextMenu_AddSpearToGrave = "Adăugați sulița în mormânt"
+	ContextMenu_RemoveSpearFromGrave = "Scoate sulița din mormânt"
 }

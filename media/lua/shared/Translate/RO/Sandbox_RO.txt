@@ -1,4 +1,4 @@
 Sandbox_RO = {
-	Sandbox_SpearTraps_SpearTrapsKillPlayer = "Spear Traps Kill Players"
-	Sandbox_SpearTraps_SpearTrapsKillPlayer_tooltip = "Kill players when walking over a spear trap"
+	Sandbox_SpearTraps_SpearTrapsKillPlayer = "Capcanele cu suliță ucid jucătorii"
+	Sandbox_SpearTraps_SpearTrapsKillPlayer_tooltip = "Ucide jucători când trec peste o capcană cu suliță"
 }
