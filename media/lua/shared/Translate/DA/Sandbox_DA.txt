@@ -1,4 +1,4 @@
 Sandbox_DA = {
-	Sandbox_SpearTraps_SpearTrapsKillPlayer = "Spear Traps Kill Players"
-	Sandbox_SpearTraps_SpearTrapsKillPlayer_tooltip = "Kill players when walking over a spear trap"
+	Sandbox_SpearTraps_SpearTrapsKillPlayer = "Spydfælder dræber spillere"
+	Sandbox_SpearTraps_SpearTrapsKillPlayer_tooltip = "Dræb spillere, når de går over en spydfælde"
 }
