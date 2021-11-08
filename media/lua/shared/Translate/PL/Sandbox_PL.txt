@@ -1,4 +1,4 @@
-Sandbox_PL = {
-	Sandbox_SpearTraps_SpearTrapsKillPlayer = "Spear Traps Kill Players"
-	Sandbox_SpearTraps_SpearTrapsKillPlayer_tooltip = "Kill players when walking over a spear trap"
+Sandbox_EN = {
+	Sandbox_SpearTraps_SpearTrapsKillPlayer = "Pu³apki z w³óczniami Zabijaj¹ graczy"
+	Sandbox_SpearTraps_SpearTrapsKillPlayer_tooltip = "Zabijaj graczy, gdy przejd¹ przez pu³apkê z w³óczni¹"
 }

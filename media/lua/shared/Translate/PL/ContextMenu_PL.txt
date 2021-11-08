@@ -1,4 +1,4 @@
 ContextMenu_PL = {
-	ContextMenu_AddSpearToGrave = "Add Spear to Grave"
-	ContextMenu_RemoveSpearFromGrave = "Remove Spear from Grave"
+	ContextMenu_AddSpearToGrave = "Dodaj w³óczniê do grobu"
+	ContextMenu_RemoveSpearFromGrave = "Usuñ w³óczniê z grobu"
 }
