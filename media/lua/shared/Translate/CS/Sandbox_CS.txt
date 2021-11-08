@@ -1,4 +1,4 @@
-Sandbox_CS = {
-	Sandbox_SpearTraps_SpearTrapsKillPlayer = "Spear Traps Kill Players"
-	Sandbox_SpearTraps_SpearTrapsKillPlayer_tooltip = "Kill players when walking over a spear trap"
+Sandbox_EN = {
+	Sandbox_SpearTraps_SpearTrapsKillPlayer = "Pasti na kopí zabíjejí hráèe"
+	Sandbox_SpearTraps_SpearTrapsKillPlayer_tooltip = "Zabijte hráèe, když jdou pøes past na kopí"
 }
