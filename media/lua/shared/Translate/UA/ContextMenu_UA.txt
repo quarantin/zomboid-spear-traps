@@ -1,4 +1,4 @@
 ContextMenu_UA = {
-	ContextMenu_AddSpearToGrave = "Add Spear to Grave"
-	ContextMenu_RemoveSpearFromGrave = "Remove Spear from Grave"
+	ContextMenu_AddSpearToGrave = "Додайте запасний у могилу"
+	ContextMenu_RemoveSpearFromGrave = "Вийміть запасний з могили"
 }
