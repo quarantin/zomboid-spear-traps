@@ -1,4 +1,4 @@
 Sandbox_CH = {
-	Sandbox_SpearTraps_SpearTrapsKillPlayer = "Spear Traps Kill Players"
-	Sandbox_SpearTraps_SpearTrapsKillPlayer_tooltip = "Kill players when walking over a spear trap"
+	Sandbox_SpearTraps_SpearTrapsKillPlayer = "長矛陷阱殺死玩家"
+	Sandbox_SpearTraps_SpearTrapsKillPlayer_tooltip = "走過長矛陷阱時殺死玩家"
 }

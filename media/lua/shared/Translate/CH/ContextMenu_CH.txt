@@ -1,4 +1,4 @@
 ContextMenu_CH = {
-	ContextMenu_AddSpearToGrave = "Add Spear to Grave"
-	ContextMenu_RemoveSpearFromGrave = "Remove Spear from Grave"
+	ContextMenu_AddSpearToGrave = "將矛加入墳墓"
+	ContextMenu_RemoveSpearFromGrave = "從墳墓中取出長矛"
 }
