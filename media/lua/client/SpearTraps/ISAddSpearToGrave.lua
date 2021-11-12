@@ -1,7 +1,3 @@
-require 'SpearTraps/SpearTraps'
-require 'BuildingObjects/ISEmptyGraves'
-require 'TimedActions/ISBaseTimedAction'
-
 ISAddSpearToGrave = ISBaseTimedAction:derive('ISAddSpearToGrave')
 
 function ISAddSpearToGrave:isValid()

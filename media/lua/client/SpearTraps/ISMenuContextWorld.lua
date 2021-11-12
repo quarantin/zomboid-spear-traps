@@ -1,4 +1,3 @@
-
 GraveTrapMenu = {}
 
 function GraveTrapMenu.OnFillWorldObjectContextMenu(player, context, worldobjects, test)

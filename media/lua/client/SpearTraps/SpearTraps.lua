@@ -1,5 +1,3 @@
-require 'BuildingObjects/ISEmptyGraves'
-
 local spearSprites = {
 
 	location_community_cemetary_01_32 = {

@@ -1,6 +1,3 @@
-require 'SpearTraps/SpearTraps'
-require 'TimedActions/ISBaseTimedAction'
-
 ISRemoveSpearFromGrave = ISBaseTimedAction:derive('ISRemoveSpearFromGrave')
 
 function ISRemoveSpearFromGrave:isValid()
