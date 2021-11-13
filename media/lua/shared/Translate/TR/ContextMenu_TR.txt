@@ -1,4 +1,4 @@
 ContextMenu_TR = {
-	ContextMenu_AddSpearToGrave = "Mezara mýzrak ekle"
-	ContextMenu_RemoveSpearFromGrave = "Mýzraðý mezardan çýkarýn"
+	ContextMenu_AddSpearToGrave = "Mezara mÄ±zrak ekle"
+	ContextMenu_RemoveSpearFromGrave = "Mezardan mÄ±zraÄŸÄ± Ã§Ä±kar"
 }
