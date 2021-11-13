@@ -1,4 +1,4 @@
-Sandbox_EN = {
-	Sandbox_SpearTraps_SpearTrapsKillPlayer = "Mızrak Tuzakları Oyuncuları Öldürür"
-	Sandbox_SpearTraps_SpearTrapsKillPlayer_tooltip = "Bir mızrak tuzağının üzerinden geçerken oyuncuları öldür"
+Sandbox_TR = {
+	Sandbox_SpearTraps_SpearTrapsKillPlayer = "MÄ±zrak tuzaklarÄ± oyuncularÄ± Ã¶ldÃ¼rÃ¼r"
+	Sandbox_SpearTraps_SpearTrapsKillPlayer_tooltip = "OyuncularÄ± mÄ±zrak tuzaÄŸÄ±nÄ±n Ã¼stÃ¼nden yÃ¼rÃ¼dÃ¼klerinde Ã¶ldÃ¼r"
 }
