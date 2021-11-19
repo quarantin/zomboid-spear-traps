@@ -176,7 +176,7 @@ function playerUpdate(player)
 	if grave ~= nil and not isFilledGrave(grave) then
 		local data = grave:getModData()
 		local spears = data['spears'] or {}
-		if #spears > 0 and findNonBrokenSpear(spears) > 0 and not pData['onGrave'] then
+		if #spears > 0 and findNonBrokenSpear(spears) > 0 and not pData.onGrave then
 			if SandboxVars.SpearTraps.SpearTrapsKillPlayer then
 				player:setHealth(0)
 				removeSpearTile(grave)
@@ -185,14 +185,14 @@ function playerUpdate(player)
 					giveRandomInjury(player)
 				end
 			end
-		elseif not pData['onGrave'] then
-			pData['onGrave'] = true
+		elseif not pData.onGrave then
+			pData.onGrave = true
 			if player:isRunning() then
 				giveRandomInjury(player)
 			end
 		end
 	else
-		pData['onGrave'] = nil
+		pData.onGrave = nil
 	end
 end
 
@@ -210,12 +210,12 @@ function zombieUpdate(zombie)
 			zombie:Kill(getPlayer())
 			zombie:setOnDeathDone(true)
 			removeSpearTile(grave)
-		elseif not zData['onGrave'] then
-			zData['onGrave'] = true
+		elseif not zData.onGrave then
+			zData.onGrave = true
 			zombie:knockDown(true)
 		end
 	else
-		zData['onGrave'] = nil
+		zData.onGrave = nil
 	end
 end
 
