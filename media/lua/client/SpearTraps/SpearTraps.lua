@@ -1,3 +1,5 @@
+-- Version 0.1
+
 local spearSprites = {
 
 	location_community_cemetary_01_32 = {
