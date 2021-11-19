@@ -11,8 +11,6 @@ end
 
 function ISAddSpearToGrave:update()
 	self.character:faceThisObject(self.grave)
-
-	self.character:setMetabolicTarget(Metabolics.LightDomestic) -- TODO Find more appropriate Metabolics for this task
 end
 
 function ISAddSpearToGrave:start()
