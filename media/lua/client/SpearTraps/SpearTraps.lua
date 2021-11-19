@@ -22,6 +22,23 @@ local spearSprites = {
 	},
 }
 
+function distance(sq1, sq2)
+	return math.sqrt(math.pow(sq1:getX() - sq2:getX(), 2) + math.pow(sq1:getY() - sq2:getY(), 2))
+end
+
+function getClosestSquare(player, grave)
+
+	local square = player:getSquare()
+
+	local sq1 = grave:getSquare()
+	local sq2 = getOtherSquare(grave)
+
+	local d1 = distance(square, sq1)
+	local d2 = distance(square, sq2)
+
+	return d1 < d2 and sq1 or sq2
+end
+
 function isFirstSquare(grave)
 
 	local sprite = getGraveSprite(grave)

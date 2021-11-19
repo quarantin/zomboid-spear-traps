@@ -78,7 +78,8 @@ function GraveTrapMenu.OnFillWorldObjectContextMenu2(player, context, worldobjec
 end
 
 function GraveTrapMenu.onAddSpearToGrave(worldobjects, grave, spear, player)
-	if luautils.walkAdj(player, grave:getSquare(), false) then
+	local closestSquare = getClosestSquare(player, grave)
+	if luautils.walkAdj(player, closestSquare, false) then
 		local primary = true
 		local twoHands = false
 		ISWorldObjectContextMenu.equip(player, player:getPrimaryHandItem(), spear, primary, twoHands)
@@ -87,7 +88,8 @@ function GraveTrapMenu.onAddSpearToGrave(worldobjects, grave, spear, player)
 end
 
 function GraveTrapMenu.onRemoveSpearFromGrave(worldobjects, grave, spear, spearIndex, player)
-	if luautils.walkAdj(player, grave:getSquare(), false) then
+	local closestSquare = getClosestSquare(player, grave)
+	if luautils.walkAdj(player, closestSquare, false) then
 		local primary = true
 		local twoHands = false
 		ISTimedActionQueue.add(ISRemoveSpearFromGrave:new(player, grave, spear, spearIndex, 100))
