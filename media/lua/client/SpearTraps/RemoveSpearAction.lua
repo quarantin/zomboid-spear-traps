@@ -1,5 +1,7 @@
 ISRemoveSpearFromGrave = ISBaseTimedAction:derive('ISRemoveSpearFromGrave')
 
+local SpearTraps = require('SpearTraps/SpearTraps')
+
 function ISRemoveSpearFromGrave:isValid()
 	return true
 end
@@ -25,7 +27,7 @@ end
 function ISRemoveSpearFromGrave:perform()
 	ISBaseTimedAction.perform(self)
 	if self.spear:getCondition() > 0 then
-		removeSpearTile(self.grave)
+		SpearTraps.removeSpearTile(self.grave)
 	end
 	local spears = self.grave:getModData()['spears'] or {}
 	table.remove(spears, self.spearIndex)
@@ -38,8 +40,8 @@ function ISRemoveSpearFromGrave:new(character, grave, spear, spearIndex, time)
 	self.__index = self
 	o.character = character
 	o.grave = grave
-	o.grave2 = getGrave(getOtherSquare(grave))
-	if not isFirstSquare(grave) then
+	o.grave2 = SpearTraps.getOtherGrave(grave)
+	if not SpearTraps.isFirstSquare(grave) then
 		o.grave = o.grave2
 		o.grave2 = grave
 	end

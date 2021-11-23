@@ -1,6 +1,45 @@
-GraveTrapMenu = {}
+local SpearTraps = require('SpearTraps/SpearTraps')
 
-function GraveTrapMenu.OnFillWorldObjectContextMenu(player, context, worldobjects, test)
+local function distance(sq1, sq2)
+	return math.sqrt(math.pow(sq1:getX() - sq2:getX(), 2) + math.pow(sq1:getY() - sq2:getY(), 2))
+end
+
+local function getClosestSquare(player, grave)
+
+	local square = player:getSquare()
+
+	local sq1 = grave:getSquare()
+	local sq2 = SpearTraps.getOtherSquare(grave)
+
+	local d1 = distance(square, sq1)
+	local d2 = distance(square, sq2)
+
+	return d1 < d2 and sq1 or sq2
+end
+
+local function onAddSpear(worldobjects, grave, spear, player)
+	print('DEBUG: 1')
+	local closestSquare = getClosestSquare(player, grave)
+	if luautils.walkAdj(player, closestSquare, false) then
+		print('DEBUG: 2')
+		local primary = true
+		local twoHands = false
+		ISWorldObjectContextMenu.equip(player, player:getPrimaryHandItem(), spear, primary, twoHands)
+		ISTimedActionQueue.add(ISAddSpearToGrave:new(player, grave, spear, 100))
+		print('DEBUG: 3')
+	end
+end
+
+local function onRemoveSpear(worldobjects, grave, spear, spearIndex, player)
+	local closestSquare = getClosestSquare(player, grave)
+	if luautils.walkAdj(player, closestSquare, false) then
+		local primary = true
+		local twoHands = false
+		ISTimedActionQueue.add(ISRemoveSpearFromGrave:new(player, grave, spear, spearIndex, 100))
+	end
+end
+
+local function onFillWorldObjectContextMenu(player, context, worldobjects, test)
 
 	if test and ISWorldObjectContextMenu.Test then return true end
 
@@ -34,7 +73,7 @@ function GraveTrapMenu.OnFillWorldObjectContextMenu(player, context, worldobject
 					context:addSubMenu(rootmenu, submenu)
 					for i = 0, items:size() - 1 do
 						local spear = items:get(i)
-						submenu:addOption(spear:getName(), worldobjects, GraveTrapMenu.onAddSpearToGrave, grave, spear, playerObj)
+						submenu:addOption(spear:getName(), worldobjects, onAddSpear, grave, spear, playerObj)
 					end
 					return
 				end
@@ -44,7 +83,7 @@ function GraveTrapMenu.OnFillWorldObjectContextMenu(player, context, worldobject
 	end
 end
 
-function GraveTrapMenu.OnFillWorldObjectContextMenu2(player, context, worldobjects, test)
+local function onFillWorldObjectContextMenu2(player, context, worldobjects, test)
 
 	if test and ISWorldObjectContextMenu.Test then return true end
 
@@ -68,7 +107,7 @@ function GraveTrapMenu.OnFillWorldObjectContextMenu2(player, context, worldobjec
 						if spear.condition <= 0 then
 							name = name .. ' (Broken)'
 						end
-						submenu:addOption(name, worldobjects, GraveTrapMenu.onRemoveSpearFromGrave, grave, spear, spearIndex, playerObj)
+						submenu:addOption(name, worldobjects, onRemoveSpear, grave, spear, spearIndex, playerObj)
 					end
 					return
 				end
@@ -77,24 +116,5 @@ function GraveTrapMenu.OnFillWorldObjectContextMenu2(player, context, worldobjec
 	end
 end
 
-function GraveTrapMenu.onAddSpearToGrave(worldobjects, grave, spear, player)
-	local closestSquare = getClosestSquare(player, grave)
-	if luautils.walkAdj(player, closestSquare, false) then
-		local primary = true
-		local twoHands = false
-		ISWorldObjectContextMenu.equip(player, player:getPrimaryHandItem(), spear, primary, twoHands)
-		ISTimedActionQueue.add(ISAddSpearToGrave:new(player, grave, spear, 100))
-	end
-end
-
-function GraveTrapMenu.onRemoveSpearFromGrave(worldobjects, grave, spear, spearIndex, player)
-	local closestSquare = getClosestSquare(player, grave)
-	if luautils.walkAdj(player, closestSquare, false) then
-		local primary = true
-		local twoHands = false
-		ISTimedActionQueue.add(ISRemoveSpearFromGrave:new(player, grave, spear, spearIndex, 100))
-	end
-end
-
-Events.OnFillWorldObjectContextMenu.Add(GraveTrapMenu.OnFillWorldObjectContextMenu)
-Events.OnFillWorldObjectContextMenu.Add(GraveTrapMenu.OnFillWorldObjectContextMenu2)
+Events.OnFillWorldObjectContextMenu.Add(onFillWorldObjectContextMenu)
+Events.OnFillWorldObjectContextMenu.Add(onFillWorldObjectContextMenu2)

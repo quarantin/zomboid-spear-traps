@@ -1,5 +1,7 @@
 ISAddSpearToGrave = ISBaseTimedAction:derive('ISAddSpearToGrave')
 
+local SpearTraps = require('SpearTraps/SpearTraps')
+
 function ISAddSpearToGrave:isValid()
 	return true
 end
@@ -49,7 +51,7 @@ function ISAddSpearToGrave:perform()
 
 		local grave = #spears % 2 == 1 and self.grave or self.grave2
 		local sq = grave:getSquare()
-		local name = getSpearSprite(grave)
+		local name = SpearTraps.getSpearSprite(grave)
 		local tile = IsoObject.new(sq, name, true)
 		tile:setName(name)
 		tile:setSprite(name)
@@ -63,8 +65,8 @@ function ISAddSpearToGrave:new(character, grave, spear, time)
 	self.__index = self
 	o.character = character
 	o.grave = grave
-	o.grave2 = getGrave(getOtherSquare(grave))
-	if not isFirstSquare(grave) then
+	o.grave2 = SpearTraps.getOtherGrave(grave)
+	if not SpearTraps.isFirstSquare(grave) then
 		o.grave = o.grave2
 		o.grave2 = grave
 	end

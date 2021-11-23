@@ -1,5 +1,3 @@
--- Version 0.1
-
 local spearSprites = {
 
 	location_community_cemetary_01_32 = {
@@ -22,30 +20,7 @@ local spearSprites = {
 	},
 }
 
-function distance(sq1, sq2)
-	return math.sqrt(math.pow(sq1:getX() - sq2:getX(), 2) + math.pow(sq1:getY() - sq2:getY(), 2))
-end
-
-function getClosestSquare(player, grave)
-
-	local square = player:getSquare()
-
-	local sq1 = grave:getSquare()
-	local sq2 = getOtherSquare(grave)
-
-	local d1 = distance(square, sq1)
-	local d2 = distance(square, sq2)
-
-	return d1 < d2 and sq1 or sq2
-end
-
-function isFirstSquare(grave)
-
-	local sprite = getGraveSprite(grave)
-	return sprite == 'location_community_cemetary_01_33' or sprite == 'location_community_cemetary_01_34'
-end
-
-function getGraveSprite(grave)
+local function getGraveSprite(grave)
 	local sq = grave:getSquare()
 	local objs = sq:getObjects()
 	for i=0, objs:size() - 1 do
@@ -56,7 +31,13 @@ function getGraveSprite(grave)
 	end
 end
 
-function getSpearSprite(grave)
+local function isFirstSquare(grave)
+
+	local sprite = getGraveSprite(grave)
+	return sprite == 'location_community_cemetary_01_33' or sprite == 'location_community_cemetary_01_34'
+end
+
+local function getSpearSprite(grave)
 	local graveSprite = getGraveSprite(grave)
 	local spearSprites = spearSprites[graveSprite]
 	local data = grave:getModData()
@@ -74,7 +55,7 @@ function getSpearSprite(grave)
 	end
 end
 
-function getTile(square)
+local function getTile(square)
 	local objs = square:getObjects()
 	for i=objs:size() - 1, 0, -1 do
 		local obj = objs:get(i)
@@ -100,7 +81,7 @@ function getTile(square)
 	end
 end
 
-function findNonBrokenSpear(spears)
+local function findNonBrokenSpear(spears)
 	for i = #spears, 1, -1 do
 		local spear = spears[i]
 		if spear.condition > 0 then
@@ -110,7 +91,7 @@ function findNonBrokenSpear(spears)
 	return -1
 end
 
-function breakSpear(grave, spears)
+local function breakSpear(grave, spears)
 	local spearIndex = findNonBrokenSpear(spears)
 	if spearIndex > 0 then
 		local data = grave:getModData()
@@ -119,11 +100,23 @@ function breakSpear(grave, spears)
 	end
 end
 
-function isFilledGrave(grave)
+local function isFilledGrave(grave)
 	return grave:getModData()['corpses'] >= ISEmptyGraves.getMaxCorpses(grave)
 end
 
-function getOtherSquare(grave)
+-- TODO Retrieve the grave the way it was mentioned on Discord
+local function getGrave(square)
+	if square then
+		for i=0, square:getSpecialObjects():size() - 1 do
+			local grave = square:getSpecialObjects():get(i)
+			if grave:getName() == 'EmptyGraves' then
+				return grave
+			end
+		end
+	end
+end
+
+local function getOtherSquare(grave)
 	local data = grave:getModData()
 	local sq1 = grave:getSquare()
     if grave:getNorth() then
@@ -143,19 +136,11 @@ function getOtherSquare(grave)
 	return sq2
 end
 
--- TODO Retrieve the grave the way it was mentioned on Discord
-function getGrave(square)
-	if square then
-		for i=0, square:getSpecialObjects():size() - 1 do
-			local grave = square:getSpecialObjects():get(i)
-			if grave:getName() == 'EmptyGraves' then
-				return grave
-			end
-		end
-	end
+local function getOtherGrave(grave)
+	return getGrave(getOtherSquare(grave))
 end
 
-function removeSpearTile(grave)
+local function removeSpearTile(grave)
 
 	local square = grave:getSquare()
 	local tile = getTile(square)
@@ -171,7 +156,7 @@ function removeSpearTile(grave)
 	end
 end
 
-function giveRandomInjury(player)
+local function giveRandomInjury(player)
 
 	local bodyParts = {
 		BodyPartType.Foot_L,
@@ -185,7 +170,7 @@ function giveRandomInjury(player)
 	bodyPart:setAdditionalPain(bodyPart:getAdditionalPain() + ZombRand(20))
 end
 
-function playerUpdate(player)
+local function onPlayerUpdate(player)
 
 	local pData = player:getModData()
 	local square = player:getSquare()
@@ -213,7 +198,7 @@ function playerUpdate(player)
 	end
 end
 
-function zombieUpdate(zombie)
+local function onZombieUpdate(zombie)
 
 	local zData = zombie:getModData()
 	local square = zombie:getSquare()
@@ -236,5 +221,14 @@ function zombieUpdate(zombie)
 	end
 end
 
-Events.OnPlayerUpdate.Add(playerUpdate)
-Events.OnZombieUpdate.Add(zombieUpdate)
+Events.OnPlayerUpdate.Add(onPlayerUpdate)
+Events.OnZombieUpdate.Add(onZombieUpdate)
+
+return {
+	getGrave = getGrave,
+	getOtherGrave = getOtherGrave,
+	getOtherSquare = getOtherSquare,
+	getSpearSprite = getSpearSprite,
+	isFirstSquare = isFirstSquare,
+	removeSpearTile = removeSpearTile,
+}
