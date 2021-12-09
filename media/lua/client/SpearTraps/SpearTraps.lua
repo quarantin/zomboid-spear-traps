@@ -96,7 +96,6 @@ local function breakSpear(grave, spears)
 	if spearIndex > 0 then
 		local data = grave:getModData()
 		data['spears'][spearIndex].condition = 0
-		grave:transmitModData()
 	end
 end
 
@@ -180,12 +179,14 @@ local function onPlayerUpdate(player)
 		local spears = data['spears'] or {}
 		if #spears > 0 and findNonBrokenSpear(spears) > 0 and not pData.onGrave then
 			if SandboxVars.SpearTraps.SpearTrapsKillPlayer then
-				player:setHealth(0)
+				player:Kill(nil)
 				removeSpearTile(grave)
+				breakSpear(grave, spears)
 			else
 				for i=0, #spears do
 					giveRandomInjury(player)
 				end
+				breakSpear(grave, spears)
 			end
 		elseif not pData.onGrave then
 			pData.onGrave = true
@@ -207,11 +208,9 @@ local function onZombieUpdate(zombie)
 		local data = grave:getModData()
 		local spears = data['spears'] or {}
 		if #spears > 0 and findNonBrokenSpear(spears) > 0 then
-			breakSpear(grave, spears)
-			zombie:DoZombieInventory()
-			zombie:Kill(getPlayer())
-			zombie:setOnDeathDone(true)
+			zombie:Kill(nil)
 			removeSpearTile(grave)
+			breakSpear(grave, spears)
 		elseif not zData.onGrave then
 			zData.onGrave = true
 			zombie:knockDown(true)
