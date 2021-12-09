@@ -18,15 +18,12 @@ local function getClosestSquare(player, grave)
 end
 
 local function onAddSpear(worldobjects, grave, spear, player)
-	print('DEBUG: 1')
 	local closestSquare = getClosestSquare(player, grave)
 	if luautils.walkAdj(player, closestSquare, false) then
-		print('DEBUG: 2')
 		local primary = true
 		local twoHands = false
 		ISWorldObjectContextMenu.equip(player, player:getPrimaryHandItem(), spear, primary, twoHands)
 		ISTimedActionQueue.add(ISAddSpearToGrave:new(player, grave, spear, 100))
-		print('DEBUG: 3')
 	end
 end
 
