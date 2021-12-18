@@ -55,7 +55,7 @@ function ISAddSpearToGrave:perform()
 		local tile = IsoObject.new(sq, name, true)
 		tile:setName(name)
 		tile:setSprite(name)
-		sq:AddTileObject(tile)
+		sq:transmitAddObjectToSquare(tile, -1)
 	end
 end
 
