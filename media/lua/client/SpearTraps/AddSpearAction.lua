@@ -57,6 +57,9 @@ function ISAddSpearToGrave:perform()
 		tile:setSprite(name)
 		sq:transmitAddObjectToSquare(tile, -1)
 	end
+
+	self.grave:transmitModData()
+	self.grave2:transmitModData()
 end
 
 function ISAddSpearToGrave:new(character, grave, spear, time)
