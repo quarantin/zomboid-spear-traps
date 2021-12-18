@@ -91,14 +91,13 @@ local function findNonBrokenSpear(spears)
 	return -1
 end
 
-local function breakSpear(grave, spears)
-	local spearIndex = findNonBrokenSpear(spears)
-	if spearIndex > 0 then
-		local data = grave:getModData()
-		data['spears'][spearIndex].condition = 0
-		--grave:transmitModData()
-		--getOtherGrave(grave):transmitModData()
-	end
+local function breakSpear(grave, grave2, spears, spearIndex)
+	local data = grave:getModData()
+	local data2 = grave2:getModData()
+	data['spears'][spearIndex].condition = 0
+	data2['spears'][spearIndex].condition = 0
+	grave:transmitModData()
+	grave2:transmitModData()
 end
 
 local function isFilledGrave(grave)
@@ -173,23 +172,29 @@ end
 
 local function onPlayerUpdate(player)
 
+	if not player:isAlive() then
+		return
+	end
+
 	local pData = player:getModData()
 	local square = player:getSquare()
 	local grave = getGrave(square)
 	if grave ~= nil and not isFilledGrave(grave) then
+		local grave2 = getOtherGrave(grave)
 		local data = grave:getModData()
 		local spears = data['spears'] or {}
-		if #spears > 0 and findNonBrokenSpear(spears) > 0 and not pData.onGrave then
+		local spearIndex = findNonBrokenSpear(spears)
+		if #spears > 0 and  spearIndex > 0 and not pData.onGrave then
 			pData.onGrave = true
 			if SandboxVars.SpearTraps.SpearTrapsKillPlayer then
 				player:Kill(nil)
 				removeSpearTile(grave)
-				breakSpear(grave, spears)
+				breakSpear(grave, grave2, spears, spearIndex)
 			else
 				for i=0, #spears do
 					giveRandomInjury(player)
 				end
-				breakSpear(grave, spears)
+				breakSpear(grave, grave2, spears, spearIndex)
 			end
 		elseif not pData.onGrave then
 			pData.onGrave = true
@@ -204,17 +209,23 @@ end
 
 local function onZombieUpdate(zombie)
 
+	if not zombie:isAlive() then
+		return
+	end
+
 	local zData = zombie:getModData()
 	local square = zombie:getSquare()
 	local grave = getGrave(square)
 	if grave ~= nil and not isFilledGrave(grave) then
+		local grave2 = getOtherGrave(grave)
 		local data = grave:getModData()
 		local spears = data['spears'] or {}
-		if #spears > 0 and findNonBrokenSpear(spears) > 0 and not zData.onGrave then
+		local spearIndex = findNonBrokenSpear(spears)
+		if #spears > 0 and  spearIndex > 0 and not zData.onGrave then
 			zData.onGrave = true
 			zombie:Kill(nil)
 			removeSpearTile(grave)
-			breakSpear(grave, spears)
+			breakSpear(grave, grave2, spears, spearIndex)
 		elseif not zData.onGrave then
 			zData.onGrave = true
 			zombie:knockDown(true)

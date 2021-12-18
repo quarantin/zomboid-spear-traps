@@ -30,7 +30,9 @@ function ISRemoveSpearFromGrave:perform()
 		SpearTraps.removeSpearTile(self.grave)
 	end
 	local spears = self.grave:getModData()['spears'] or {}
+	local spears2 = self.grave2:getModData()['spears'] or {}
 	table.remove(spears, self.spearIndex)
+	table.remove(spears2, self.spearIndex)
 	self.grave:transmitModData()
 	self.grave2:transmitModData()
 	self.character:getInventory():AddItem(self.spear)

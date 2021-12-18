@@ -59,10 +59,9 @@ local function onFillWorldObjectContextMenu(player, context, worldobjects, test)
 		for i=0, square:getSpecialObjects():size()-1 do
 			local grave = square:getSpecialObjects():get(i)
 			if grave:getName() == 'EmptyGraves' then
-				local data = grave:getModData()
-				data['spears'] = data['spears'] or {}
-				local spears = data['spears']
-				local corpses = data['corpses']
+				local data = grave:getModData() or {}
+				local spears = data['spears'] or {}
+				local corpses = data['corpses'] or 0
 				local maxCorpses = ISEmptyGraves.getMaxCorpses(grave)
 				if #spears < maxCorpses and corpses < maxCorpses then
 					local rootmenu = context:addOption(getText('ContextMenu_AddSpearToGrave'), worldobjects, nil)
@@ -91,10 +90,8 @@ local function onFillWorldObjectContextMenu2(player, context, worldobjects, test
 		for i=0, square:getSpecialObjects():size()-1 do
 			local grave = square:getSpecialObjects():get(i)
 			if grave:getName() == 'EmptyGraves' then
-				local data = grave:getModData()
-				data['spears'] = data['spears'] or {}
-
-				local spears = data['spears']
+				local data = grave:getModData() or {}
+				local spears = data['spears'] or {}
 				if #spears > 0 then
 					local rootmenu = context:addOption(getText('ContextMenu_RemoveSpearFromGrave'), worldobjects, nil)
 					local submenu = context:getNew(context)

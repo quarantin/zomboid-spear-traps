@@ -30,9 +30,10 @@ function ISAddSpearToGrave:perform()
 	local data2 = self.grave2:getModData()
 
 	data['spears'] = data['spears'] or {}
-	data2['spears'] = data['spears']
+	data2['spears'] = data2['spears'] or {}
 
 	local spears = data['spears']
+	local spears2 = data2['spears']
 	if #spears < ISEmptyGraves.getMaxCorpses(self.grave) then
 		local itemName = self.spear:getName()
 		local itemType = self.spear:getFullType()
@@ -44,7 +45,12 @@ function ISAddSpearToGrave:perform()
 			condition = itemCondition,
 			repair = itemRepair,
 		})
-
+		table.insert(spears2, {
+			name = itemName,
+			itemType = itemType,
+			condition = itemCondition,
+			repair = itemRepair,
+		})
 		ISBaseTimedAction.perform(self)
 		self.character:setPrimaryHandItem(nil)
 		self.character:getInventory():Remove(self.spear)
