@@ -96,6 +96,8 @@ local function breakSpear(grave, spears)
 	if spearIndex > 0 then
 		local data = grave:getModData()
 		data['spears'][spearIndex].condition = 0
+		--grave:transmitModData()
+		--getOtherGrave(grave):transmitModData()
 	end
 end
 
@@ -144,13 +146,13 @@ local function removeSpearTile(grave)
 	local square = grave:getSquare()
 	local tile = getTile(square)
 	if tile ~= nil then
-		square:RemoveTileObject(tile)
+		square:transmitRemoveItemFromSquare(tile)
 		return
 	else
 		square = getOtherSquare(grave)
 		tile = getTile(square)
 		if tile ~= nil then
-			square:RemoveTileObject(tile)
+			square:transmitRemoveItemFromSquare(tile)
 		end
 	end
 end
