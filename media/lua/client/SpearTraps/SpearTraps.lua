@@ -170,6 +170,14 @@ local function giveRandomInjury(player)
 	bodyPart:setAdditionalPain(bodyPart:getAdditionalPain() + ZombRand(20))
 end
 
+local function killZombie(zombie)
+
+	zombie:Kill(nil)
+	zombie:DoCorpseInventory()
+	-- TODO
+	--GameClient.sendZombieDeath(zombie)
+end
+
 local function onPlayerUpdate(player)
 
 	if not player:isAlive() then
@@ -223,6 +231,8 @@ local function onZombieUpdate(zombie)
 		local spearIndex = findNonBrokenSpear(spears)
 		if #spears > 0 and  spearIndex > 0 and not zData.onGrave then
 			zData.onGrave = true
+			-- TODO
+			--killZombie(zombie)
 			zombie:Kill(nil)
 			removeSpearTile(grave)
 			breakSpear(grave, grave2, spears, spearIndex)
