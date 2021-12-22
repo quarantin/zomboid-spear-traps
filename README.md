@@ -1,4 +1,4 @@
-# Zomboid - Mod - Spear Traps
+# Project Zomboid - Mod - Spear Traps
 A mod for the game Project Zomboid to add the possibility to setup spear traps.
 
 # Steam Workshop URL
