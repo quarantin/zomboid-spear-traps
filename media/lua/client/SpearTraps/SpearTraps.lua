@@ -180,7 +180,7 @@ end
 
 local function onPlayerUpdate(player)
 
-	if not player:isAlive() then
+	if not player:isAlive() or player:getVehicle() then
 		return
 	end
 
