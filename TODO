@@ -1,0 +1,4 @@
+Don't hurt players with god-mode enabled
+Flat tire when driving over a spear trap
+self.character:setVariable("WalkSpeed", 1);
+self.character:setVariable("WalkSpeed", 10);
