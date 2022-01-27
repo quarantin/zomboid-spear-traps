@@ -38,8 +38,8 @@ local function onRemoveSpear(worldobjects, grave, spears, player)
 	if luautils.walkAdj(player, closestSquare, false) then
 		local primary = true
 		local twoHands = false
-		for spearIndex, spear in ipairs(spears) do
-			ISTimedActionQueue.add(ISRemoveSpearFromGrave:new(player, grave, spear, spearIndex, 100))
+		for _, item in ipairs(spears) do
+			ISTimedActionQueue.add(ISRemoveSpearFromGrave:new(player, grave, item.spear, item.index, 100))
 		end
 	end
 end
@@ -65,7 +65,7 @@ local function aggregateItems2(items)
 
 	local aggregate = {}
 
-	for _, item in ipairs(items) do
+	for index, item in ipairs(items) do
 
 		local itemName = item.name
 		if item.condition <= 0 then
@@ -75,7 +75,10 @@ local function aggregateItems2(items)
 		if not aggregate[itemName] then
 			aggregate[itemName] = {}
 		end
-		table.insert(aggregate[itemName], item)
+		table.insert(aggregate[itemName], {
+			index=index,
+			spear=item,
+		})
 	end
 
 	return aggregate
