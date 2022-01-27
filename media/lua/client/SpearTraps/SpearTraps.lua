@@ -178,10 +178,76 @@ local function killZombie(zombie)
 	--GameClient.sendZombieDeath(zombie)
 end
 
+local function damagePart(part, destroy)
+
+	local damage = 100
+	if not destroy then
+		damage = damage * (10 + ZombRand(40)) / 100
+	end
+
+	part:damage(damage)
+end
+
+local function damageRandomParts(vehicle, destroy)
+
+	local validParts = {}
+
+	local partLocations = {
+		'FrontLeft',
+		'FrontRight',
+		'RearLeft',
+		'RearRight',
+	}
+
+	for _, partLocation in pairs(partLocations) do
+		local tire = vehicle:getPartById('Tire' .. partLocation)
+		local suspension = vehicle:getPartById('Suspension' .. partLocation)
+		if tire and tire:getCondition() > 0 then
+			table.insert(validParts, {
+				tire=tire,
+				suspension=suspension,
+			})
+		end
+	end
+
+	local parts = validParts[ZombRand(#validParts)]
+	damagePart(parts.tire, destroy)
+	damagePart(parts.suspension, false)
+end
+
+local function updateVehicle(vehicle)
+
+	local modData = vehicle:getModData()
+	local square = vehicle:getSquare()
+	local grave = getGrave(square)
+	if grave ~= nil and not isFilledGrave(grave) then
+		local grave2 = getOtherGrave(grave)
+		local data = grave:getModData()
+		local spears = data['spears'] or {}
+		local spearIndex = findNonBrokenSpear(spears)
+		if #spears > 0 and  spearIndex > 0 and not modData.onGrave then
+			modData.onGrave = true
+			damageRandomParts(vehicle, true)
+			removeSpearTile(grave)
+			breakSpear(grave, grave2, spears, spearIndex)
+		elseif not modData.onGrave then
+			modData.onGrave = true
+			damageRandomParts(vehicle, false)
+		end
+	else
+		modData.onGrave = nil
+	end
+end
+
 local function onPlayerUpdate(player)
 
-	if not player:isAlive() or player:getVehicle() or player:isGodMod() or player:isInvincible() then
+	if not player:isAlive() or player:isGodMod() or player:isInvincible() then
 		return
+	end
+
+	local vehicle = player:getVehicle()
+	if vehicle then
+		return updateVehicle(vehicle)
 	end
 
 	local pData = player:getModData()
