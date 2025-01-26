@@ -1,7 +1,6 @@
 version=1
 id=2640351732
 title=Spear Traps
-description=[img]https://i.imgur.com/p7Fv1Z6.gif[/img]
 description=[h1]Brings spear traps to the game.[/h1]
 description=
 description=[h1]How to build a spear trap?[/h1]
@@ -41,6 +40,11 @@ description=https://github.com/quarantin/zomboid-spear-traps/issues
 description=
 description=Feedbacks are welcome! You can find me on the official Project Zomboid Discord server:
 description=https://discord.com/invite/theindiestone
+description=
+description=[h1]Support Me[/h1]
+description=If you like my work please consider supporting me on Ko-Fi!
+description=
+description=[url=https://ko-fi.com/quarantin][img]https://raw.githubusercontent.com/ChuckTheSheep/chuckImages/main/kofi.png[/img][/url]
 description=
 description=Have fun! ;D
 tags=Build 41;Build 42;Misc;Multiplayer;Realistic
