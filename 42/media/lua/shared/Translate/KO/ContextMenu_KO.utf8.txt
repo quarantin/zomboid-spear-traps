@@ -1,0 +1,4 @@
+ContextMenu_KO = {
+	ContextMenu_AddSpearToGrave = "무덤에 창 추가하기"
+	ContextMenu_RemoveSpearFromGrave = "무덤에서 창 제거하기"
+}

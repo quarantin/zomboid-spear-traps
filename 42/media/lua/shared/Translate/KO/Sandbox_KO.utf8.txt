@@ -1,0 +1,4 @@
+Sandbox_KO = {
+	Sandbox_SpearTraps_SpearTrapsKillPlayer = "창 함정으로 플레이어 죽이기"
+	Sandbox_SpearTraps_SpearTrapsKillPlayer_tooltip = "플레이어가 창 함정을 건너갈 시 죽습니다."
+}

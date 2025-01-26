@@ -49,7 +49,11 @@ function ISRemoveSpearFromGrave:new(character, grave, spear, spearIndex, time)
 		o.grave = o.grave2
 		o.grave2 = grave
 	end
-	o.spear = InventoryItemFactory.CreateItem(spear.itemType)
+	if getCore():getGameVersion():getMajor() < 42 then
+		o.spear = InventoryItemFactory.CreateItem(spear.itemType)
+	else
+		o.spear = instanceItem(spear.itemType)
+	end
 	o.spear:setCondition(spear.condition)
 	o.spear:setHaveBeenRepaired(spear.repair)
 	o.spearIndex = spearIndex
