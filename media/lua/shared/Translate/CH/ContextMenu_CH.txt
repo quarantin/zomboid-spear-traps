@@ -1,4 +1,4 @@
 ContextMenu_CH = {
-	ContextMenu_AddSpearToGrave = "±N¥Ù¥[¤J¼X¹Ó"
-	ContextMenu_RemoveSpearFromGrave = "±q¼X¹Ó¤¤¨ú¥Xªø¥Ù"
+	ContextMenu_AddSpearToGrave = "å°‡çŸ›åŠ å…¥å¢³å¢“"
+	ContextMenu_RemoveSpearFromGrave = "å¾å¢³å¢“ä¸­å–å‡ºé•·çŸ›"
 }

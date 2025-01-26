@@ -1,4 +1,4 @@
 Sandbox_CH = {
-	Sandbox_SpearTraps_SpearTrapsKillPlayer = "ªø¥Ù³´¨À±ş¦ºª±®a"
-	Sandbox_SpearTraps_SpearTrapsKillPlayer_tooltip = "¨«¹Lªø¥Ù³´¨À®É±ş¦ºª±®a"
+	Sandbox_SpearTraps_SpearTrapsKillPlayer = "é•·çŸ›é™·é˜±æ®ºæ­»ç©å®¶"
+	Sandbox_SpearTraps_SpearTrapsKillPlayer_tooltip = "èµ°éé•·çŸ›é™·é˜±æ™‚æ®ºæ­»ç©å®¶"
 }
